@@ -25,9 +25,12 @@ namespace Empresa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            services.AddDbContext<EmpresaContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("EmpresaContext")));
+            var connection = Configuration["ConnectionStrings:EmpresaContext"];
+                                services.AddDbContext<EmpresaContext>(options =>
+                                options.UseMySql(connection)
+                                );
+            // Add framework services.
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
